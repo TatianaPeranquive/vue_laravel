@@ -29,22 +29,22 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        return [
-            ...parent::share($request),
-            'auth' => [
-                // 'user' => $request->user(),
-            'user.roles' => $request->user() ? $request->user()->roles->pluck('name'):[],
-            //---otorgar permisos a traves de los roles que tiene el usuario-----
-            'user.permissions' => $request->user() ? $request->user()->getPermissionsViaRoles()->pluck('name') :[]
-            ],
-        ];
+        // return [
+        //     ...parent::share($request),
+        //     'auth' => [
+        //         // 'user' => $request->user(),
+        //     'user.roles' => $request->user() ? $request->user()->roles->pluck('name'):[],
+        //     //---otorgar permisos a traves de los roles que tiene el usuario-----
+        //     'user.permissions' => $request->user() ? $request->user()->getPermissionsViaRoles()->pluck('name') :[]
+        //     ],
+        // ];
 
-        // return array_merge(parent::share($request),[
-        //  // 'user' => $request->user(),
-        //  'user.roles' => $request->user() ? $request->user()->roles->pluck('name'):[],
-        //  //---otorgar permisos a traves de los roles que tiene el usuario-----
-        //  'user.permissions' => $request->user() ? $request->user()->getPermissionsViaRoles()->pluck('name') :[]
-        // ]);
+        return array_merge(parent::share($request),[
+         // 'user' => $request->user(),
+         'user.roles' => $request->user() ? $request->user()->roles->pluck('name'):[],
+         //---otorgar permisos a traves de los roles que tiene el usuario-----
+         'user.permissions' => $request->user() ? $request->user()->getPermissionsViaRoles()->pluck('name') :[]
+        ]);
 
     }
 }

@@ -82,7 +82,8 @@ function handleImageError() {
 
                 <main class="mt-6">
                     <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
-                         <h1> HOLA MUNDIOIII</h1>
+
+                        {{$page.props}}
                     </div>
                 </main>
 

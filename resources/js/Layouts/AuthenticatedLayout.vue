@@ -33,6 +33,21 @@ const showingNavigationDropdown = ref(false);
                                     Dashboard
                                 </NavLink>
                             </div>
+                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="$page.props.user.permissions.includes('read categories')">
+                                  <NavLink :href="route('categories.index')" :active="route().current('categories.*')">
+                                    categories
+                                </NavLink>
+                            </div>
+                              <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="$page.props.user.permissions.includes('read categories')">
+                                  <NavLink :href="route('lessons.index')" :active="route().current('lessons.*')">
+                                    lessons
+                                </NavLink>
+                            </div>
+                               <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="$page.props.user.permissions.includes('read categories')">
+                                  <NavLink :href="route('roles.index')" :active="route().current('roles.*')">
+                                    roles
+                                </NavLink>
+                            </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
