@@ -11,6 +11,16 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles;
+    protected $guarded = [];
+    protected $filiable = ['name','email', 'password', 'saldo'];
+    /**
+     * Cajero Test
+     *
+     */
+    public function retiros() {
+        return $this->hasMany(Retiro::class);
+    }
+
 
     /**
      * The attributes that are mass assignable.

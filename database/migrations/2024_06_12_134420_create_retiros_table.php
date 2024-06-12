@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('retiros', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('usuario_id');
+
             $table->dateTime('fecha');
             $table->decimal('cantidad', 15, 2);
             $table->enum('estado', ['fondos insuficientes', 'retiro exitoso']);
             $table->timestamps();
-
-            // Foreign key constraint
+            $table->foreignId('user_id')->constrained('users')
+            ->onUpdate('cascade')->onDelete('cascade');
             //$table->foreign('usuario_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
