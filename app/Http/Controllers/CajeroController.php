@@ -14,13 +14,9 @@ class CajeroController extends Controller
      */
     public function index()
     {
-       // $user_log_id = Auth::id();
-      //  $user_find = user::find($user_log_id);
-        //  inertia('' =>$user_find->pluck('saldo'));
-        // return inertia('cajero/index', ['cajero' => $user_find]);
-        //  return $user_find->pluck('saldo');
-        $categories = Category::paginate(25);
-        return inertia('Cajero/index', ['cajero' => $categories]);
+       $user_log_id =
+       Auth::user();
+       return inertia('Cajero/index', ['saldo' => $user_log_id->saldo, 'name' => $user_log_id->name]);
     }
 
     /**

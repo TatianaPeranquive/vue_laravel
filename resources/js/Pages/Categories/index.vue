@@ -8,7 +8,8 @@
     import AppLayout from '@/Layouts/AuthenticatedLayout.vue'
     import { ref, watch, defineProps, initCustomFormatter } from 'vue';
     import { Head, Link } from '@inertiajs/vue3';
-
+    import { defineProps } from 'vue';
+    
 const props = defineProps({
   categories: {
     type: Object,
@@ -18,7 +19,11 @@ const props = defineProps({
 const categories = ref(props.categories);
 
 const deleteCategory = id => {
-    confirm 
+    if (confirm('Are you sure to delete the element?')) {
+    Inertia.delete(route('categories.destroy', id))
+} else {
+    // Código a ejecutar si el usuario hace clic en 'Cancelar' o cierra el cuadro de diálogo
+}
 
 }
 
