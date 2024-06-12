@@ -18,12 +18,14 @@ class UserSeeder extends Seeder
        $admin = User::factory()->create([
             'name' => 'admin',
             'email' => 'admin_@example.com',
-            'password'=> Hash::make('admin')
+            'password'=> Hash::make('admin'),
+            'saldo'=> 0
         ]);
        $editor = User::factory()->create([
             'name' => 'editor',
             'email' => 'test_@example.com',
-            'password'=> Hash::make('editor')
+            'password'=> Hash::make('editor'),
+            'saldo'=> 0
         ]);
 
         //Asignar roles gracias a la libreria HasRoles que se agrega al modelo de USer--

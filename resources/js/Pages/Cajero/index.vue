@@ -17,6 +17,10 @@ export default {
         saldo: {
         type: Number,
         required: true
+        },
+        total: {
+        type: Array,
+        required: true
         }
     });
 </script>
@@ -35,13 +39,15 @@ export default {
                                 <tr>
                                     <th class="w-1/2 px-4 uppercase  ">Nombre</th>
                                     <th class="w-1/2 px-4 uppercase  text-sm">Saldo</th>
+                                    <th class="w-1/2 px-4 uppercase  text-sm">TOTAL</th>
                                 </tr>
                             </thead>
                             <tbody class="text-gray-700">
 
                                 <tr>
-                                    <td class="w-1/2 py-3 px-4 uppercase text-center font-semibold">{{ name }}</td>
-                                    <td class="w-1/2 py-3 px-4 text-center">{{ saldo }}</td>
+                                    <!-- <td class="w-1/2 py-3 px-4 uppercase text-center font-semibold">{{ name }}</td>
+                                    <td class="w-1/2 py-3 px-4 text-center">{{ saldo }}</td> -->
+                                      <td class="w-1/2 py-3 px-4 text-center">{{ total }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -51,7 +57,7 @@ export default {
                                 <p>Monto mínimo $1.000 y máximo $2.000.000</p>
 
                             </div>
-                           
+
                             <div class="w-1/2">
                                 <input type="text" name="doc_nombre" class="text-center form-control mt-2 p-2 border rounded text-center" id="doc_nombre" placeholder="00000">
                             </div>
