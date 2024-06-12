@@ -7,7 +7,7 @@ export default {
 <script setup>
 import AppLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { ref, defineProps } from 'vue';
-import { Head, router } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3'; // Verifica la importación correcta
 
 const props = defineProps({
     name: {
@@ -25,13 +25,12 @@ const props = defineProps({
 });
 
 const monto = ref(0);
-const showTotal = ref(false);
+
 
 const continuar = () => {
     if (monto.value >= 1000 && monto.value <= 2000000) {
-        console.log('Monto válido:', monto.value);
         showTotal.value = true;
-        router.post(route('retiro.store'), { monto: monto.value });
+        router.post(route('cajero.retiro.store'), { monto: monto.value });
     } else {
         alert('Monto debe ser entre $1.000 y $2.000.000');
     }
@@ -53,14 +52,14 @@ const continuar = () => {
                                 <tr>
                                     <th class="w-1/3 px-4 uppercase">Nombre</th>
                                     <th class="w-1/3 px-4 uppercase text-sm">Saldo</th>
-                                    <th v-if="showTotal" class="w-1/3 px-4 uppercase text-sm">TOTAL</th>
+                                    <th  class="w-1/3 px-4 uppercase text-sm">TOTAL</th>
                                 </tr>
                             </thead>
                             <tbody class="text-gray-700">
                                 <tr>
                                     <td class="w-1/3 py-3 px-4 uppercase text-center font-semibold">{{ name }}</td>
                                     <td class="w-1/3 py-3 px-4 text-center">{{ saldo }}</td>
-                                    <td v-if="showTotal" class="w-1/3 py-3 px-4 text-center">{{ total }}</td>
+                                    <td  class="w-1/3 py-3 px-4 text-center">{{ total }}</td>
                                 </tr>
                             </tbody>
                         </table>

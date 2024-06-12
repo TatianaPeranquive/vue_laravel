@@ -21,10 +21,11 @@ class CajeroController extends Controller
             return redirect()->route('login');
         }
 
-       return inertia('Cajero/index',
-       ['total' => $total,
-       'saldo'  => !empty($user_logged->saldo) ? $user_logged->saldo : '0',
-       'name'   => $user_logged->name]);
+        return inertia('Cajero/index', [
+            'total' => $total,
+            'saldo' => $user_logged->saldo ?? 0,
+            'name' => $user_logged->name,
+        ]);
     }
 
     /**
@@ -57,6 +58,7 @@ class CajeroController extends Controller
      */
     public function crearRetiro($user_logged, $monto_retirar, $estado )
     {
+        $estado = ($estado == true) ? "retiro exitoso" : "fondos insuficientes" ;
         Retiro::create( [
         'user_id'  => $user_logged->id,
         'fecha'    => Carbon::now(),
@@ -70,12 +72,12 @@ class CajeroController extends Controller
      /**
      * Actualiza el saldo del usuario logueado
      */
-    // public function actualizarSaldoUsuario($user_logged, $monto_retirar)
-    // {
-    //     $user_logged->saldo = $user_logged->saldo - $monto_retirar;
-    //     $user_logged->save();
-    //     return true;
-    // }
+    public function actualizarSaldoUsuario($user_logged, $monto_retirar)
+    {
+        $user_logged->saldo = $user_logged->saldo - $monto_retirar;
+        $user_logged->save();
+        return true;
+    }
 
     public function contarBilletes($monto_retirar)
     {
@@ -125,7 +127,7 @@ class CajeroController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $this->retirarDinero($request->input('monto'));
     }
 
     /**
