@@ -48,6 +48,11 @@ const showingNavigationDropdown = ref(false);
                                     roles
                                 </NavLink>
                             </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink :href="route('cajero.index')" :active="route().current('cajero.*')">
+                                cajero
+                            </NavLink>
+                            </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -131,7 +136,26 @@ const showingNavigationDropdown = ref(false);
                             Dashboard
                         </ResponsiveNavLink>
                     </div>
-
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="$page.props.user.permissions.includes('read categories')">
+                            <ResponsiveNavLink :href="route('categories.index')" :active="route().current('categories.*')">
+                            categories
+                        </ResponsiveNavLink>
+                    </div>
+                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="$page.props.user.permissions.includes('read categories')">
+                            <ResponsiveNavLink :href="route('lessons.index')" :active="route().current('lessons.*')">
+                            lessons
+                        </ResponsiveNavLink>
+                    </div>
+                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="$page.props.user.permissions.includes('read categories')">
+                            <ResponsiveNavLink :href="route('roles.index')" :active="route().current('roles.*')">
+                            roles
+                        </ResponsiveNavLink>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <ResponsiveNavLink :href="route('cajero.index')" :active="route().current('cajero.*')">
+                            cajero
+                        </ResponsiveNavLink>
+                    </div>
                     <!-- Responsive Settings Options -->
                     <div class="pt-4 pb-1 border-t border-gray-200">
                         <div class="px-4">
@@ -156,6 +180,7 @@ const showingNavigationDropdown = ref(false);
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <slot name="header" />
                 </div>
+                
             </header>
 
             <!-- Page Content -->

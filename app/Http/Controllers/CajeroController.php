@@ -1,18 +1,26 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Category;
+
 use Illuminate\Http\Request;
-use Inertia\Response;
-class CategoryController extends Controller
+use App\Models\User;
+use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
+
+class CajeroController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+       // $user_log_id = Auth::id();
+      //  $user_find = user::find($user_log_id);
+        //  inertia('' =>$user_find->pluck('saldo'));
+        // return inertia('cajero/index', ['cajero' => $user_find]);
+        //  return $user_find->pluck('saldo');
         $categories = Category::paginate(25);
-       return inertia('Categories/index', ['categories' => $categories]);
+        return inertia('Cajero/index', ['cajero' => $categories]);
     }
 
     /**

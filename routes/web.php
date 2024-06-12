@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\cajeroController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -24,4 +25,5 @@ Route::middleware('auth')->group(function () {
 Route::resource('/categories',CategoryController::class);
 Route::resource('/lessons', LessonController::class);
 Route::resource('/roles',RoleController::class);
+Route::resource('/cajero',CajeroController::class);
 require __DIR__.'/auth.php';
