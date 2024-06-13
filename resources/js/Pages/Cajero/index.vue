@@ -8,8 +8,12 @@ export default {
 import AppLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { ref,defineProps } from 'vue';
 import { usePage,Head, router } from '@inertiajs/vue3';
+
+import Inertia from '@inertiajs/inertia';
+
 const { $inertia } = usePage();
 const monto = ref('');
+const showTotal = ref(false);
 const props = defineProps({
     name: {
         type: String,
@@ -36,26 +40,26 @@ const props = defineProps({
 //     Inertia.post(route('store'), form.value);
 // };
 
-
-// Función que se ejecuta cuando el usuario hace clic en el botón "CONTINUAR"
 const continuar = () => {
     if (monto.value >= 1000 && monto.value <= 2000000) {
-        // Accede al ID del usuario desde props.user
-        const id_user = props.user_id;
 
-        // Envía la solicitud POST con monto e id_user
+        const id_user = props.user_id;
+        showTotal.value = true;
+
         router.post(route('cajero.store'), { monto: monto.value, user_id: id_user })
             .then(response => {
-                console.log('Respuesta del servidor:', response.data);
+                // Manejar la respuesta exitosa
+                alert('Retiro exitoso');
+                // Puedes redirigir o realizar otras acciones después del éxito
             })
             .catch(error => {
-                console.error('Error al enviar la solicitud:', error);
+                // Manejar errores de la solicitud
+                alert('Error al procesar la solicitud: ' + error.message);
             });
     } else {
-        alert('Monto debe ser entre $1.000 y $2.000.000');
+        alert('Monto debe estar entre $1.000 y $2.000.000');
     }
 };
-
 
 
 </script>
