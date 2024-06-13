@@ -48,12 +48,9 @@ const continuar = () => {
 
         router.post(route('cajero.store'), { monto: monto.value, user_id: id_user })
             .then(response => {
-                // Manejar la respuesta exitosa
                 alert('Retiro exitoso');
-                // Puedes redirigir o realizar otras acciones después del éxito
             })
             .catch(error => {
-                // Manejar errores de la solicitud
                 alert('Error al procesar la solicitud: ' + error.message);
             });
     } else {
