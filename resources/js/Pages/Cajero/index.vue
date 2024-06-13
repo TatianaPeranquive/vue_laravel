@@ -6,9 +6,10 @@ export default {
 
 <script setup>
 import AppLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { ref, defineProps } from 'vue';
-import { Head, router } from '@inertiajs/vue3';
-
+import { ref,defineProps } from 'vue';
+import { usePage,Head, router } from '@inertiajs/vue3';
+const { $inertia } = usePage();
+const monto = ref('');
 const props = defineProps({
     name: {
         type: String,
@@ -21,21 +22,42 @@ const props = defineProps({
     total: {
         type: Array,
         required: true
+    },
+    user_id: {
+        type: Number,
+        required: true
     }
 });
 
-const monto = ref(0);
-const showTotal = ref(false);
 
+// const submitForm = () => {
+//     const montoInt = parseInt(monto.value, 10);
+//     //route('cajero.store').post(montoInt);
+//     Inertia.post(route('store'), form.value);
+// };
+
+
+// Función que se ejecuta cuando el usuario hace clic en el botón "CONTINUAR"
 const continuar = () => {
     if (monto.value >= 1000 && monto.value <= 2000000) {
-        console.log('Monto válido:', monto.value);
-        showTotal.value = true;
-        router.post(route('retiro.store'), { monto: monto.value });
+        // Accede al ID del usuario desde props.user
+        const id_user = props.user_id;
+
+        // Envía la solicitud POST con monto e id_user
+        router.post(route('cajero.store'), { monto: monto.value, user_id: id_user })
+            .then(response => {
+                console.log('Respuesta del servidor:', response.data);
+            })
+            .catch(error => {
+                console.error('Error al enviar la solicitud:', error);
+            });
     } else {
         alert('Monto debe ser entre $1.000 y $2.000.000');
     }
 };
+
+
+
 </script>
 
 <template>
@@ -70,12 +92,12 @@ const continuar = () => {
                                 <p>Monto mínimo $1.000 y máximo $2.000.000</p>
                             </div>
 
-                            <div class="w-1/2">
-                                <input type="number" v-model="monto" id="monto" required class="text-center form-control mt-2 p-2 border rounded text-center" placeholder="00000">
-                            </div>
-                            <button @click="continuar" class="text-white bg-indigo-400 hover:bg-indigo-700 py-2 px-4 rounded transition duration-200">
-                                CONTINUAR
-                            </button>
+                               <form @submit.prevent="submitForm">
+                                    <input type="number" v-model="monto" required class="text-center form-control mt-2 p-2 border rounded text-center" placeholder="Ejemplo:$1000">
+                                    <button @click="continuar" class="text-white bg-indigo-400 hover:bg-indigo-700 py-2 px-4 rounded transition duration-200">
+                                        CONTINUAR
+                                    </button>
+                                </form>
                         </div>
                     </div>
                 </div>

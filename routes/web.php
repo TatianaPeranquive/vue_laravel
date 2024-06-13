@@ -27,4 +27,6 @@ Route::resource('/lessons', LessonController::class);
 Route::resource('/roles',RoleController::class);
 Route::resource('/cajero',CajeroController::class);
 Route::resource('/retiro',CajeroController::class);
+Route::post('/store', [CajeroController::class, 'store'])->name('store');
+
 require __DIR__.'/auth.php';

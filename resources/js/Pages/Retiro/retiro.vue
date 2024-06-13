@@ -72,9 +72,7 @@ const continuar = () => {
                             <div class="w-1/2">
                                 <input type="number" v-model="monto" id="monto" required class="text-center form-control mt-2 p-2 border rounded text-center" placeholder="00000">
                             </div>
-                            <button @click="continuar" class="text-white bg-indigo-400 hover:bg-indigo-700 py-2 px-4 rounded transition duration-200">
-                                CONTINUAR
-                            </button>
+                         
                         </div>
                     </div>
                 </div>

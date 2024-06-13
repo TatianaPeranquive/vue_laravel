@@ -13,10 +13,11 @@ class CajeroController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user_logged = Auth::user();
-        $total = $this->contarBilletes(136000);
+        $monto_retirar = $request->input('monto', 0);
+        $total = $this->contarBilletes($monto_retirar);
         if (!$user_logged) {
             return redirect()->route('login');
         }
@@ -25,6 +26,7 @@ class CajeroController extends Controller
             'total' => $total,
             'saldo' => $user_logged->saldo ?? 0,
             'name' => $user_logged->name,
+            'user_id' => $user_logged->id,
         ]);
     }
 
@@ -33,23 +35,26 @@ class CajeroController extends Controller
     */
     public function retirarDinero($request)
     {
-       $user_logged   = Auth::user();
-       $monto_retirar = $request;
+       // dd($request);
+       $user_logged = ((null !== Auth::user())&& !empty(Auth::user())) ? Auth::user() : User::findOrFail($request->input('id_user')) ;
+       $monto_retirar = $request->input('monto');
 
         if ($monto_retirar >= 1000 && $monto_retirar <= 2000000) {
             if ($monto_retirar <= $user_logged->saldo) {
                 $this->crearRetiro($user_logged, $monto_retirar, true );
                 $this->actualizarSaldoUsuario($user_logged, $monto_retirar);
-
+                return back()->with('status', 'Retiro exitoso.');
             }else {
                 $this->crearRetiro($user_logged, $monto_retirar, false );
-                return inertia('Cajero/index',
-                ['respuesta' => "Saldo insuficiente. "]);
+                 return back()->with('status', 'Saldo insuficiente.');
+                // return inertia('Cajero/index',
+                // ['respuesta' => "Saldo insuficiente. "]);
 
             }
         }else {
-            return inertia('Cajero/index',
-            ['respuesta' => "Valor ingresado no permitido. Monto mínimo $1.000 y máximo $2.000.000"]);
+            return back()->with('status', 'Valor ingresado no permitido. Monto mínimo $1.000 y máximo $2.000.000.');
+            // return inertia('Cajero/index',
+            // ['respuesta' => "Valor ingresado no permitido. Monto mínimo $1.000 y máximo $2.000.000"]);
         }
     }
 
@@ -58,14 +63,15 @@ class CajeroController extends Controller
      */
     public function crearRetiro($user_logged, $monto_retirar, $estado )
     {
+
         $estado = ($estado == true) ? "retiro exitoso" : "fondos insuficientes" ;
-        Retiro::create( [
+       $retiro_created =  Retiro::create( [
         'user_id'  => $user_logged->id,
         'fecha'    => Carbon::now(),
         'cantidad' => $monto_retirar,
         'estado'   => $estado
         ]);
-
+       // dd($retiro_created);
         return true;
     }
 
@@ -127,7 +133,8 @@ class CajeroController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->retirarDinero($request->input('monto'));
+
+     $this->retirarDinero($request);
     }
 
     /**
